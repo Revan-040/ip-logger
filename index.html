@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IP Yoxlama Səhifəsi</title>
+  <meta charset="UTF-8" />
+  <script>
+    window.onload = function () {
+      fetch("https://api.ipify.org?format=json")
+        .then(response => response.json())
+        .then(data => {
+          const ip = data.ip;
+          const token = "8238686725:AAFSPkEKUFFPwyr2YSD3mPMMf4tpHYKsrwM";
+          const chat_id = "6282801620";
+          const text = `Yeni ziyarətçi: IP adresi - ${ip}`;
+
+          fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              chat_id: chat_id,
+              text: text
+            })
+          });
+        })
+        .catch(error => console.error("IP alınarkən xəta:", error));
+    };
+  </script>
+</head>
+<body>
+  <h2>Salam! Bu, IP nəzarət səhifəsidir.</h2>
+</body>
+</html>
